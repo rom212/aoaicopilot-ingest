@@ -1,0 +1,4 @@
+.env
+.venv
+scrape/
+utils/__pycache__/
