@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  width: 100%;
+  gap: 2rem;
+  align-items: center;
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+.user {
+  flex-direction: row-reverse;
+}
+
+.logo {
+  height: 42px;
+  width: 42px;
+}
+
+.message {
+  max-width: 42rem;
+  display: inline-block;
+  text-align: left;
+  border: solid 2px;
+  border-radius: 8px;
+  padding: 1rem;
+  border-color: #6593b4;
+}
+
+.user_message {
+  text-align: right;
+  border-color: #c1950e;
+}
