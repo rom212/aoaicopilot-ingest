@@ -10,7 +10,9 @@ export default function Home() {
     {
       ai: "Hi there, I am your Azure Open AI Documentation Copilot, ask me anything about the service!",
     },
-    { user: "Awesome, what are the models suppored?" },
+    {
+      user: "Awesome, what are the models suppored? and where? and Awesome, what are the models suppored?. Awesome, what are the models suppored?Awesome, what are the models suppored?",
+    },
     {
       ai: "I support  bunch of models such as GPT4 and  GPT4-Turbo",
     },
@@ -30,12 +32,13 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
-          AOAI Documentation Copilot - Questions already answered:&nbsp;
+          Azure Open AI Documentation Copilot - Questions already
+          answered:&nbsp;
           <code className={styles.code}>100</code>
         </p>
         <div>
           <a href="mailto:romanmullier@microsoft.com?subject=Feedback on AOAI Documentation Copilot">
-            Send Feedback
+            Feedback appreciated
           </a>
         </div>
       </div>

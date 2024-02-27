@@ -22,7 +22,6 @@ export default function Message(props) {
       >
         <p>{content}</p>
       </div>
-      {/* <div>BLANK GOES HERE</div> */}
     </div>
   );
 }
