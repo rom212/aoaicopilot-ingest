@@ -16,7 +16,7 @@ export default function Input(props) {
       inputRef.current.value = "";
       onNewMessage({ role: "assistant", content: state.response });
     }
-  }, [state.response]);
+  }, [state]);
 
   const handleSubmit = () => {
     onNewMessage({ role: "user", content: inputRef.current.value });
