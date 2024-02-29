@@ -24,9 +24,11 @@
   border-radius: 8px;
   padding: 1rem;
   border-color: #6593b4;
+  box-shadow: 0 0 4px 1px #6593b4;
 }
 
 .user_message {
   text-align: right;
   border-color: #c1950e;
+  box-shadow: 0 0 4px 1px #c1950e;
 }

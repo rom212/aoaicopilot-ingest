@@ -1,15 +1,20 @@
 .container {
-    width: 2.5rem;
-    height:2.5rem;
-    border: solid 1px;
-    border-radius: 50%;
-    transition: transform .15s ease-in-out;
-    background-color: #3B3B3B;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: solid 1px;
+  border-radius: 50%;
+  transition: transform 0.15s ease-in-out;
+  background-color: #3b3b3b;
 }
 
 .container:hover {
-    transform: rotate(-90deg);
-    cursor:pointer;
-    border: solid 2px;
+  transform: rotate(-90deg);
+  cursor: pointer;
+  border: solid 2px;
 }
 
+.container:disabled {
+  border: none;
+  cursor: none;
+  transform: none;
+}

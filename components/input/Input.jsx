@@ -5,18 +5,29 @@ import styles from "./Input.module.css";
 
 import { sendNewMessage } from "@/actions/actions";
 
-export default function Input() {
+export default function Input(props) {
+  const { onNewMessage, thread } = props;
   const inputRef = useRef();
-  const [state, formAction] = useFormState(sendNewMessage, "");
+  const sendNewMessageWithHistory = sendNewMessage.bind(null, thread);
+  const [state, formAction] = useFormState(sendNewMessageWithHistory, "");
 
   useEffect(() => {
-    if (state.message == "success") {
+    if (state.status == "success") {
       inputRef.current.value = "";
+      onNewMessage({ role: "assistant", content: state.response });
     }
-  }, [state]);
+  }, [state.response]);
+
+  const handleSubmit = () => {
+    onNewMessage({ role: "user", content: inputRef.current.value });
+  };
 
   return (
-    <form className={styles.container} action={formAction}>
+    <form
+      className={styles.container}
+      action={formAction}
+      onSubmit={handleSubmit}
+    >
       <input
         type="text"
         id="inputQuestion"

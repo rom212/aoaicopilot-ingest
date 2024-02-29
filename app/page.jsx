@@ -8,25 +8,20 @@ import MessageList from "@/components/messageList/messageList";
 export default function Home() {
   const [thread, setThread] = useState([
     {
-      ai: "Hi there, I am your Azure Open AI Documentation Copilot, ask me anything about the service!",
+      role: "system",
+      content:
+        "You are an assistant that only answers questions about the NBA. If asked anything else, answer 'pickles'",
     },
     {
-      user: "Awesome, what are the models suppored? and where? and Awesome, what are the models suppored?. Awesome, what are the models suppored?Awesome, what are the models suppored?",
-    },
-    {
-      ai: "I support  bunch of models such as GPT4 and  GPT4-Turbo",
-    },
-    { user: "what region are they available in?" },
-    {
-      ai: "Region avaialabitliy will vary, waht model in particular?",
-    },
-    {
-      user: "how about GPT4 1106?",
-    },
-    {
-      ai: "we have it north central",
+      role: "assistant",
+      content:
+        "Hi there, I am your Azure Open AI Documentation Copilot, ask me anything about the service!",
     },
   ]);
+
+  const updateThread = (newMessage) => {
+    setThread((previousThread) => [...previousThread, newMessage]);
+  };
 
   return (
     <main className={styles.main}>
@@ -38,17 +33,17 @@ export default function Home() {
         </p>
         <div>
           <a href="mailto:romanmullier@microsoft.com?subject=Feedback on AOAI Documentation Copilot">
-            Feedback appreciated
+            Feedback welcome here
           </a>
         </div>
       </div>
 
       <div className={styles.center}>
-        <MessageList content={thread} />
+        <MessageList content={thread.filter((_, idx) => idx != 0)} />
       </div>
 
       <div className={styles.input}>
-        <Input />
+        <Input onNewMessage={updateThread} thread={thread} />
       </div>
     </main>
   );

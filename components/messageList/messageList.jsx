@@ -7,11 +7,11 @@ export default function MessageList(props) {
   const { content } = props;
   return (
     <div className={styles.container}>
-      {content.map((message) => {
-        return message.user ? (
-          <Message type="user" content={message.user} />
+      {content.map((message, idx) => {
+        return message.role === "user" ? (
+          <Message type="user" content={message.content} key={idx} />
         ) : (
-          <Message content={message.ai} />
+          <Message content={message.content} key={idx} />
         );
       })}
     </div>
