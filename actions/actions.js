@@ -1,6 +1,7 @@
 "use server";
 import OpenAI from "openai";
 import { MongoClient, ServerApiVersion } from "mongodb";
+import { embed } from "./embedding";
 
 const resource = "aoaicopilot";
 const model = "gpt-4-turbo";
@@ -57,6 +58,7 @@ const incrementCounter = async () => {
 export async function sendNewMessage(thread, previousState, formData) {
   const userInput = formData.get("inputQuestion");
   console.log("Non-streaming:");
+  const embedding = embed(userInput);
   const managedThread = manageThread(thread);
   const payload = [...managedThread, { role: "user", content: userInput }];
   console.log("[sending payload]: ", payload);

@@ -4,6 +4,7 @@ import Sendbutton from "../sendButton/SendButton";
 import styles from "./Input.module.css";
 
 import { sendNewMessage } from "@/actions/actions";
+import InputBar from "../inputBar/InputBar";
 
 export default function Input(props) {
   const { onNewMessage, thread } = props;
@@ -28,12 +29,14 @@ export default function Input(props) {
       action={formAction}
       onSubmit={handleSubmit}
     >
-      <input
+      {/* <input
         type="text"
         id="inputQuestion"
         name="inputQuestion"
         ref={inputRef}
-      />
+        // disabled
+      /> */}
+      <InputBar test="fdfdG" ref={inputRef} />
       <Sendbutton />
     </form>
   );
