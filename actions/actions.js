@@ -2,6 +2,7 @@
 import OpenAI from "openai";
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { embed } from "./embedding";
+import { search } from "./search";
 
 const resource = "aoaicopilot";
 const model = "gpt-4-turbo";
@@ -58,7 +59,10 @@ const incrementCounter = async () => {
 export async function sendNewMessage(thread, previousState, formData) {
   const userInput = formData.get("inputQuestion");
   console.log("Non-streaming:");
-  const embedding = embed(userInput);
+  console.log("USER INTPUT: ", userInput);
+  const embedding = await embed(userInput);
+  console.log("EMBEDDING: ", embedding);
+  await search(userInput, embedding);
   const managedThread = manageThread(thread);
   const payload = [...managedThread, { role: "user", content: userInput }];
   console.log("[sending payload]: ", payload);
