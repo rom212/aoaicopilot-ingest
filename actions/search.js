@@ -15,7 +15,7 @@ export async function search(query, queryVector) {
         {
           kind: "vector",
           fields: ["chunkVector"],
-          kNearestNeighborsCount: 3,
+          kNearestNeighborsCount: 5,
           vector: queryVector,
         },
       ],
