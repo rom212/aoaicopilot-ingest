@@ -37,6 +37,7 @@
 
 .code {
   font-weight: 700;
+  font-size: medium;
   font-family: var(--font-mono);
 }
 

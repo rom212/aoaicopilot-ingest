@@ -17,6 +17,6 @@ export async function embed(content) {
   const result = await openai.embeddings.create({
     input: content,
   });
-  //   console.log(result.data[0].embedding);
+
   return result.data[0].embedding;
 }

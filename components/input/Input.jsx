@@ -17,6 +17,9 @@ export default function Input(props) {
       inputRef.current.value = "";
       onNewMessage({ role: "assistant", content: state.response });
     }
+    if (state.status == "429") {
+      onNewMessage({ role: "assistant", content: state.response });
+    }
   }, [state]);
 
   const handleSubmit = () => {
@@ -29,14 +32,7 @@ export default function Input(props) {
       action={formAction}
       onSubmit={handleSubmit}
     >
-      {/* <input
-        type="text"
-        id="inputQuestion"
-        name="inputQuestion"
-        ref={inputRef}
-        // disabled
-      /> */}
-      <InputBar test="fdfdG" ref={inputRef} />
+      <InputBar ref={inputRef} />
       <Sendbutton />
     </form>
   );

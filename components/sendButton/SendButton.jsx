@@ -2,7 +2,7 @@
 
 import { useFormStatus } from "react-dom";
 
-import { Audio, CirclesWithBar, Discuss, Comment } from "react-loader-spinner";
+import { Discuss } from "react-loader-spinner";
 
 import styles from "./SendButton.module.css";
 
@@ -10,15 +10,15 @@ export default function Sendbutton() {
   const { pending } = useFormStatus();
 
   return pending ? (
-    <Comment
+    <Discuss
       visible={true}
       height="40"
       width="40"
-      ariaLabel="comment-loading"
+      ariaLabel="discuss-loading"
       wrapperStyle={{}}
-      wrapperClass="comment-wrapper"
+      wrapperClass="discuss-wrapper"
       color="#fff"
-      backgroundColor="#6593b4"
+      backgroundColor="#F4442E"
     />
   ) : (
     <button className={styles.container} type="submit" disabled={pending}>

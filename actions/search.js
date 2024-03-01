@@ -8,6 +8,7 @@ const searchClient = new SearchClient(
 );
 
 export async function search(query, queryVector) {
+  let results = [];
   const searchResults = await searchClient.search("*", {
     vectorSearchOptions: {
       queries: [
@@ -21,6 +22,7 @@ export async function search(query, queryVector) {
     },
   });
   for await (const result of searchResults.results) {
-    console.log(result);
+    results.push(result.document.chunkText);
   }
+  return results;
 }

@@ -4,18 +4,17 @@ import { fetchCounter } from "@/actions/mongo";
 import styles from "./page.module.css";
 import Input from "@/components/input/Input";
 import MessageList from "@/components/messageList/messageList";
+import { META_PROMPT, GREETING } from "@/constants";
 
 export default function Home() {
   const [thread, setThread] = useState([
     {
       role: "system",
-      content:
-        "You are an assistant that only answers questions about the NBA. If asked anything else, answer 'pickles'",
+      content: META_PROMPT,
     },
     {
       role: "assistant",
-      content:
-        "Hi there, I am your Azure Open AI Documentation Copilot, ask me anything about the service!",
+      content: GREETING,
     },
   ]);
 

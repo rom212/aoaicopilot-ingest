@@ -26,7 +26,6 @@ export async function mongoTestConnect() {
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
   } finally {
-    // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
@@ -47,6 +46,8 @@ export async function fetchCounter() {
     console.error(
       `Something went wrong trying to find the documents: ${err}\n`
     );
+  } finally {
+    await client.close();
   }
   return result[0];
 }

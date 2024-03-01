@@ -20,7 +20,9 @@ export default function Message(props) {
           [styles.user_message]: type == "user",
         })}
       >
-        <p>{content}</p>
+        <p
+          dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, "<br/>") }}
+        />
       </div>
     </div>
   );

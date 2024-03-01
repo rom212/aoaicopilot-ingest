@@ -4,9 +4,9 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 import { embed } from "./embedding";
 import { search } from "./search";
 
-const resource = "aoaicopilot";
-const model = "gpt-4-turbo";
-const apiVersion = "2024-02-15-preview";
+const resource = process.env["AOAI_RESOURCE"];
+const model = process.env["MODEL_DEPLOYMENT"];
+const apiVersion = process.env["API_VERSION"];
 const apiKey = process.env["AZURE_OPENAI_API_KEY"];
 
 const openai = new OpenAI({
@@ -16,12 +16,12 @@ const openai = new OpenAI({
   defaultHeaders: { "api-key": apiKey },
 });
 
-const username = "writeUser";
-const password = "joYJ17DcRAlwturn";
+const username = process.env["MONGO_WRITE_USER"];
+const password = process.env["MONGO_WRITE_PASSWORD"];
 const uri = `mongodb+srv://${username}:${password}@aoaicopilot.hjebngd.mongodb.net/?retryWrites=true&w=majority&appName=aoaicopilot`;
 
-const dbName = "aoaicopilot";
-const collectionName = "counter";
+const dbName = process.env["MONGO_DB_NAME"];
+const collectionName = process.env["MONGO_COLLECTION_NAME"];
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -31,7 +31,10 @@ const client = new MongoClient(uri, {
   },
 });
 
-const manageThread = (thread) => {
+const manageThread = (thread, searchResults) => {
+  const stuffedSystemPrompt =
+    thread[0].content + "/n" + searchResults.join("\n");
+  thread.splice(0, 1, { role: "system", content: stuffedSystemPrompt });
   if (thread.length > 4) {
     return [thread[0], ...thread.slice(thread.length - 3, thread.length)];
   }
@@ -53,24 +56,34 @@ const incrementCounter = async () => {
     console.error(
       `Something went wrong trying to update the counter: ${err}\n`
     );
+  } finally {
+    await client.close();
   }
 };
 
 export async function sendNewMessage(thread, previousState, formData) {
   const userInput = formData.get("inputQuestion");
   console.log("Non-streaming:");
-  console.log("USER INTPUT: ", userInput);
   const embedding = await embed(userInput);
-  console.log("EMBEDDING: ", embedding);
-  await search(userInput, embedding);
-  const managedThread = manageThread(thread);
+  const searchResults = await search(userInput, embedding);
+  const managedThread = manageThread(thread, searchResults);
   const payload = [...managedThread, { role: "user", content: userInput }];
   console.log("[sending payload]: ", payload);
-  const result = await openai.chat.completions.create({
-    model,
-    messages: payload,
-  });
-  console.log("[received response]: ", result.choices[0].message?.content);
-  incrementCounter();
-  return { status: "success", response: result.choices[0].message?.content };
+  try {
+    const result = await openai.chat.completions.create({
+      model,
+      messages: payload,
+    });
+    console.log("[received response]: ", result.choices[0].message?.content);
+    incrementCounter();
+    return { status: "success", response: result.choices[0].message?.content };
+  } catch (err) {
+    if (err.status == 429) {
+      console.log("[error]: Throttled");
+      return {
+        status: "429",
+        response: "Too Many Requests - Please try again later",
+      };
+    }
+  }
 }
