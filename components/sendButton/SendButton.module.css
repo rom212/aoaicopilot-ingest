@@ -1,10 +1,11 @@
 .container {
   width: 2.5rem;
   height: 2.5rem;
-  border: solid 1px;
+  border: solid 1px white;
   border-radius: 50%;
   transition: transform 0.15s ease-in-out;
   background-color: #3b3b3b;
+  color: white;
 }
 
 .container:hover {

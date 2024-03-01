@@ -43,7 +43,7 @@ export default function Home() {
         </p>
         <div>
           <a href="mailto:romanmullier@microsoft.com?subject=Feedback on AOAI Documentation Copilot">
-            Feedback welcome here
+            Leave Feedback
           </a>
         </div>
       </div>
