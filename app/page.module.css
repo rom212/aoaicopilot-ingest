@@ -108,7 +108,9 @@
   }
 
   .center {
-    padding: 8rem 0 6rem;
+    padding: 1rem 0 1rem;
+    /* background-color: red; */
+    height: 36rem;
   }
 
   .center::before {
