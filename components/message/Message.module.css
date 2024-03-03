@@ -32,3 +32,13 @@
   border-color: #c1950e;
   box-shadow: 0 0 4px 1px #c1950e;
 }
+
+@media (max-width: 700px) {
+  .logo {
+    display: none;
+  }
+
+  .message {
+    max-width: 90%;
+  }
+}
