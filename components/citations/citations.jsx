@@ -6,13 +6,8 @@ export default function Citations({ citationsList }) {
   return (
     <ul className={styles.container}>
       {trimmedCitationsList.map((citation, idx) => (
-        <li>
-          <a
-            href={citation}
-            target="_blank"
-            rel="noopener noreferrer"
-            key={idx}
-          >
+        <li key={idx}>
+          <a href={citation} target="_blank" rel="noopener noreferrer">
             {citation}
           </a>
         </li>
