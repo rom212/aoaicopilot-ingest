@@ -4,9 +4,10 @@ import Ninja from "@/icons/Ninja";
 import User from "@/icons/User";
 
 import styles from "./Message.module.css";
+import Citations from "../citations/citations";
 
 export default function Message(props) {
-  const { type, content } = props;
+  const { type, content, citations } = props;
 
   return (
     <div
@@ -23,6 +24,8 @@ export default function Message(props) {
         <p
           dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, "<br/>") }}
         />
+
+        {citations && <Citations citationsList={citations} />}
       </div>
     </div>
   );

@@ -1,0 +1,10 @@
+.container {
+  margin-top: 2rem;
+  color: rgb(246, 147, 255);
+  font-size: small;
+  list-style: none;
+}
+
+.container li:not(:last-child) {
+  margin-bottom: 0.5rem;
+}

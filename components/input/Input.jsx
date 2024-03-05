@@ -15,7 +15,11 @@ export default function Input(props) {
   useEffect(() => {
     if (state.status == "success") {
       inputRef.current.value = "";
-      onNewMessage({ role: "assistant", content: state.response });
+      onNewMessage({
+        role: "assistant",
+        content: state.response,
+        citations: state.citations,
+      });
     }
     if (state.status == "429") {
       onNewMessage({ role: "assistant", content: state.response });

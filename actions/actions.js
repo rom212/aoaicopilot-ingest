@@ -32,13 +32,20 @@ const client = new MongoClient(uri, {
 });
 
 const manageThread = (thread, searchResults) => {
+  const cleanThread = thread.map((message) => ({
+    role: message.role,
+    content: message.content,
+  }));
   const stuffedSystemPrompt =
-    thread[0].content + "/n" + searchResults.join("\n");
-  thread.splice(0, 1, { role: "system", content: stuffedSystemPrompt });
-  if (thread.length > 4) {
-    return [thread[0], ...thread.slice(thread.length - 3, thread.length)];
+    cleanThread[0].content + "/n" + searchResults.join("\n");
+  cleanThread.splice(0, 1, { role: "system", content: stuffedSystemPrompt });
+  if (cleanThread.length > 4) {
+    return [
+      cleanThread[0],
+      ...cleanThread.slice(cleanThread.length - 3, cleanThread.length),
+    ];
   }
-  return thread;
+  return cleanThread;
 };
 
 const incrementCounter = async () => {
@@ -63,12 +70,22 @@ const incrementCounter = async () => {
 
 export async function sendNewMessage(thread, previousState, formData) {
   const userInput = formData.get("inputQuestion");
+
   console.log("Non-streaming:");
+
   const embedding = await embed(userInput);
+
   const searchResults = await search(userInput, embedding);
-  const managedThread = manageThread(thread, searchResults);
+
+  const chunkTextList = searchResults.map((item) => item.chunkText);
+  const chunkUrlList = searchResults.map((item) => item.chunkUrl);
+  const dedupedChunkUrlList = [...new Set(chunkUrlList)];
+
+  const managedThread = manageThread(thread, chunkTextList);
+
   const payload = [...managedThread, { role: "user", content: userInput }];
   console.log("[sending payload]: ", payload);
+
   try {
     const result = await openai.chat.completions.create({
       model,
@@ -76,7 +93,11 @@ export async function sendNewMessage(thread, previousState, formData) {
     });
     console.log("[received response]: ", result.choices[0].message?.content);
     incrementCounter();
-    return { status: "success", response: result.choices[0].message?.content };
+    return {
+      status: "success",
+      response: result.choices[0].message?.content,
+      citations: dedupedChunkUrlList,
+    };
   } catch (err) {
     if (err.status == 429) {
       console.log("[error]: Throttled");

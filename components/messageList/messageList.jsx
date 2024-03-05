@@ -23,7 +23,11 @@ export default function MessageList(props) {
         return message.role === "user" ? (
           <Message type="user" content={message.content} key={idx} />
         ) : (
-          <Message content={message.content} key={idx} />
+          <Message
+            content={message.content}
+            citations={message.citations}
+            key={idx}
+          />
         );
       })}
       <div ref={messagesEndRef} />
