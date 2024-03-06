@@ -78,8 +78,14 @@ export async function sendNewMessage(thread, previousState, formData) {
   const searchResults = await search(userInput, embedding);
 
   const chunkTextList = searchResults.map((item) => item.chunkText);
+
   const chunkUrlList = searchResults.map((item) => item.chunkUrl);
-  const dedupedChunkUrlList = [...new Set(chunkUrlList)];
+
+  const filteredUrlList = chunkUrlList.filter(
+    (item) => !item.includes("openai/includes")
+  );
+
+  const dedupedChunkUrlList = [...new Set(filteredUrlList)];
 
   const managedThread = manageThread(thread, chunkTextList);
 
