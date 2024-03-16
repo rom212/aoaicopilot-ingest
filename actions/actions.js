@@ -8,6 +8,10 @@ const resource = process.env["AOAI_RESOURCE"];
 const model = process.env["MODEL_DEPLOYMENT"];
 const apiVersion = process.env["API_VERSION"];
 const apiKey = process.env["AZURE_OPENAI_API_KEY"];
+const username = process.env["MONGO_WRITE_USER"];
+const password = process.env["MONGO_WRITE_PASSWORD"];
+const dbName = process.env["MONGO_DB_NAME"];
+const collectionName = process.env["MONGO_COLLECTION_NAME"];
 
 const openai = new OpenAI({
   apiKey,
@@ -16,12 +20,7 @@ const openai = new OpenAI({
   defaultHeaders: { "api-key": apiKey },
 });
 
-const username = process.env["MONGO_WRITE_USER"];
-const password = process.env["MONGO_WRITE_PASSWORD"];
 const uri = `mongodb+srv://${username}:${password}@aoaicopilot.hjebngd.mongodb.net/?retryWrites=true&w=majority&appName=aoaicopilot`;
-
-const dbName = process.env["MONGO_DB_NAME"];
-const collectionName = process.env["MONGO_COLLECTION_NAME"];
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -70,8 +69,6 @@ const incrementCounter = async () => {
 
 export async function sendNewMessage(thread, previousState, formData) {
   const userInput = formData.get("inputQuestion");
-
-  console.log("Non-streaming:");
 
   const embedding = await embed(userInput);
 

@@ -3,10 +3,10 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 
 const username = process.env["MONGO_READ_USER"];
 const password = process.env["MONGO_READ_PASSWORD"];
-const uri = `mongodb+srv://${username}:${password}@aoaicopilot.hjebngd.mongodb.net/?retryWrites=true&w=majority&appName=aoaicopilot`;
-
 const dbName = process.env["MONGO_DB_NAME"];
 const collectionName = process.env["MONGO_COLLECTION_NAME"];
+
+const uri = `mongodb+srv://${username}:${password}@aoaicopilot.hjebngd.mongodb.net/?retryWrites=true&w=majority&appName=aoaicopilot`;
 
 const client = new MongoClient(uri, {
   serverApi: {
