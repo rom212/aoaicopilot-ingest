@@ -11,4 +11,4 @@ Only base your answer on the context below.
 Context:
 `;
 
-export const GREETING = `"Hi there, I am your Azure Open AI Documentation Copilot, ask me anything about Azure Open AI or Azure AI Search"`;
+export const GREETING = `Hi there, I am your Azure Open AI Documentation Copilot, ask me anything about Azure Open AI or Azure AI Search`;
