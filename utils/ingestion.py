@@ -1,14 +1,21 @@
 import os
 import requests
 import json
+<<<<<<< HEAD
 import time
+=======
+>>>>>>> 858aa31f0a7269f60c9fb97572e0b43d003dee49
 
 from dotenv import load_dotenv
 
 from split import split_md
 from embed import embed_chunk
 from index import create_id
+<<<<<<< HEAD
 from files import list_md_file, map_name_to_url
+=======
+from files import list_md_file
+>>>>>>> 858aa31f0a7269f60c9fb97572e0b43d003dee49
 
 load_dotenv()
 
