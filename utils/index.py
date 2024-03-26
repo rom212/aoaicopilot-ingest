@@ -41,7 +41,6 @@ def create_index():
             "facetable": False
         },
         {
-<<<<<<< HEAD
             "name": "chunkUrl", 
             "type": "Edm.String",
             "searchable": True, 
@@ -51,8 +50,6 @@ def create_index():
             "facetable": False
         },
         {
-=======
->>>>>>> 858aa31f0a7269f60c9fb97572e0b43d003dee49
             "name": "chunkVector",
             "type": "Collection(Edm.Single)",
             "searchable": True,
